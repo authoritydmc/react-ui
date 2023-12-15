@@ -60,7 +60,7 @@ const ProgressUI: React.FC<ProgressProps> = ({
               </span>
             </div>
             <div className="text-right">
-              <span className="text-xs font-semibold inline-block">
+              <span className="text-xs font-semibold inline-block" style={ {color: typeTextColor }}>
                 {progress}%
               </span>
             </div>

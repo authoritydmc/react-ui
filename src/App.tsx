@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import ProgressUI from './components/ui/progress';
 import ColorUtils from './utils/ColorUtils';
-import CopyButton from './components/common/copybutton';
 import DynamicStartProgress from './components/public/dynamicprogress';
+import CodeViewer from './components/common/codeViewer';
 
 const App: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -68,8 +68,8 @@ const App: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4">{`Use Case ${useCaseNumber}: ${description}`}</h2>
       <p className="mb-4">{description}</p>
       <pre className="bg-gray-100 p-4 rounded mb-4 relative">
-        <code>{codeSnippet}
-          <CopyButton text={codeSnippet} />
+        <code>
+          <CodeViewer code={codeSnippet} />
         </code>
       </pre>
       {component}
@@ -77,7 +77,10 @@ const App: React.FC = () => {
   );
 
   return (
-    <div className="App p-4">
+    <div className="App p-4 bg-dark text-dark">
+      <a href="https://github.com/authoritydmc/react-ui" target='_blank'>
+      <h1 className="text-3xl mx-auto flex justify-center m-10">Progress Bar UI </h1>
+      </a>
       {useCaseTemplate(
         1,
         'Basic Progress',

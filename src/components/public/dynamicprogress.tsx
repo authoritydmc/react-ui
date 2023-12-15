@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProgressUI from '../ui/progress';
+import CodeViewer from '../common/codeViewer';
 
 const DynamicStartProgress: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -44,11 +45,24 @@ const DynamicStartProgress: React.FC = () => {
 
   return (
     <div className="mb-8 border p-4 rounded">
-      <h2 className="text-2xl font-bold mb-4">Use Case 7: Dynamic Start with Elapsed Time (Dark Mode)</h2>
+      <h2 className="text-2xl font-bold mb-4">Use Case 7: Dynamic Start with Elapsed Time</h2>
       <p className="mb-4">Render a progress bar with elapsed time in dark mode after the user clicks on the start button.</p>
+   
+      <pre className="bg-gray-100 p-4 rounded mb-4 relative">
+        <code>
+          <CodeViewer code={` 
+          //Use Case 7 : Demonstrate Elapsed time 
+          <ProgressUI
+          progress={progress}
+          title={getRandomTitle()}
+          showElapsedTime
+          status={"some message"}/>`} />
+        </code>
+      </pre>
       <button
         onClick={handleStart}
-        className="bg-green-500 text-white px-2 py-1 mt-2 rounded hover:bg-green-600 focus:outline-none"
+        className="bg-green-500 text-white px-2 py-1 mt-2 rounded hover:bg-green-600 focus:outline-none flex items-center justify-center
+        mx-auto"
       >
         Start Progress
       </button>
@@ -56,12 +70,10 @@ const DynamicStartProgress: React.FC = () => {
         <ProgressUI
           progress={progress}
           title={getRandomTitle()}
-          bgColor="#1a202c"
-          textColor="#cbd5e0"
-          variant="dark"
           showElapsedTime
-          status={`Elapsed Time: ${formatElapsedTime(elapsedTime)}`}
+          status={getRandomTitle()+" message ::"}
         />
+        
       </div>
     </div>
   );
