@@ -20,7 +20,7 @@ const ProgressUI: React.FC<ProgressProps> = ({
   variant = 'light',
   showElapsedTime = true,
 }) => {
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime] = useState(Date.now());
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {

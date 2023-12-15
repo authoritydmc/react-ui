@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ProgressUI from './components/ui/progress';
 import ColorUtils from './utils/ColorUtils';
 import CopyButton from './components/common/copybutton';
+import DynamicStartProgress from './components/public/dynamicprogress';
 
 const App: React.FC = () => {
   const [progress, setProgress] = useState(0);
@@ -204,6 +205,9 @@ const App: React.FC = () => {
           textColor={getRandomColor()}
         />
       )}
+
+
+      <DynamicStartProgress/>
     </div>
   );
 };
