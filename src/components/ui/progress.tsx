@@ -87,5 +87,6 @@ const ProgressUI: React.FC<ProgressProps> = ({
     </div>
   );
 };
+module.exports=ProgressUI;
 
 export default ProgressUI;

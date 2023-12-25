@@ -5,7 +5,6 @@ import CodeViewer from '../common/codeViewer';
 const DynamicStartProgress: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [elapsedTime, setElapsedTime] = useState(0);
 
   const totalDuration = 2 * 60 * 1000; // 2 minutes in milliseconds
   const steps = 100;
@@ -16,11 +15,11 @@ const DynamicStartProgress: React.FC = () => {
   };
 
   useEffect(() => {
-    let intervalId: number;
+    let intervalId: any;
 
     if (startTime !== null) {
       intervalId = setInterval(() => {
-        setElapsedTime(Date.now() - startTime);
+    
         setProgress((prevProgress) => (prevProgress + 1) % 100);
       }, stepDuration);
     }
@@ -68,6 +67,7 @@ const DynamicStartProgress: React.FC = () => {
       </button>
       <div className="mt-4">
         <ProgressUI
+        key="dynamic1"
           progress={progress}
           title={getRandomTitle()}
           showElapsedTime
@@ -77,14 +77,6 @@ const DynamicStartProgress: React.FC = () => {
       </div>
     </div>
   );
-};
-
-const formatElapsedTime = (milliseconds: number): string => {
-  const seconds = Math.floor(milliseconds / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-
-  return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
 };
 
 export default DynamicStartProgress;

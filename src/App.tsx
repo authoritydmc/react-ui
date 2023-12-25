@@ -12,7 +12,7 @@ const App: React.FC = () => {
   const stepDuration = totalDuration / steps;
 
   useEffect(() => {
-    let intervalId: number;
+    let intervalId: any;
 
     const incrementProgress = () => {
       setProgress((prevProgress) => (prevProgress + 1) % 100);

@@ -5,9 +5,17 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    // for roll up :: library 
+  
+    "declaration": true,
+    "declarationDir": "types",
+    "sourceMap": true,
+    "outDir": "dist",
+  "allowSyntheticDefaultImports": true,
+
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
