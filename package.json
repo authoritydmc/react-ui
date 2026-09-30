@@ -1,6 +1,6 @@
 {
   "name": "@authoritydmc/react-ui",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Modern, accessible, and themeable React UI component library featuring Buttons, Modals, Breadcrumbs, Badges, Cards, Tooltips, Progress, and CodeViewers.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
