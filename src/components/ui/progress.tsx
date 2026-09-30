@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ColorUtils from '../../utils/ColorUtils';
 
-interface ProgressProps {
+export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   progress: number;
   title?: string;
   status?: string;
@@ -11,82 +10,83 @@ interface ProgressProps {
   showElapsedTime?: boolean;
 }
 
-const ProgressUI: React.FC<ProgressProps> = ({
+export const Progress: React.FC<ProgressProps> = ({
   progress,
   title,
   status,
   bgColor,
   textColor,
   variant = 'light',
-  showElapsedTime = true,
+  showElapsedTime = false,
+  className = '',
+  style,
+  ...props
 }) => {
   const [startTime] = useState(Date.now());
   const [elapsedTime, setElapsedTime] = useState(0);
 
   useEffect(() => {
+    if (!showElapsedTime) return;
     const intervalId = setInterval(() => {
       setElapsedTime(Date.now() - startTime);
     }, 1000);
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [startTime]);
+    return () => clearInterval(intervalId);
+  }, [showElapsedTime, startTime]);
 
   const formatElapsedTime = (milliseconds: number): string => {
     const seconds = Math.floor(milliseconds / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
-
     return `${hours}h ${minutes % 60}m ${seconds % 60}s`;
   };
 
-  const typeBgColor = bgColor || ColorUtils.getRandomColor();
-  const typeTextColor = textColor || ColorUtils.getTextColor(typeBgColor);
-  const cardViewBgColor = variant === 'dark' ? '#333333' : '#ffffff';
-  const cardViewTextColor = variant === 'dark' ? '#ffffff' : '#000000';
+  const clamped = Math.min(100, Math.max(0, progress));
+  const typeBgColor = bgColor || '#2563eb';
+  const typeTextColor = textColor || '#ffffff';
+  const isDark = variant === 'dark';
 
   return (
-    <div className="mt-4">
-      {progress !== 0 && (
-        <div className={`relative pt-1 bg-${cardViewBgColor} p-4 rounded-lg shadow-md`}>
-          <div className="flex mb-2 items-center justify-between">
-            <div>
-              <span
-                className={`text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full p-2`}
-                style={{ backgroundColor: typeBgColor, color: typeTextColor }}
-              >
-                {title || 'Initializing'}
-              </span>
-            </div>
-            <div className="text-right">
-              <span className="text-xs font-semibold inline-block" style={ {color: typeTextColor }}>
-                {progress}%
-              </span>
-            </div>
-          </div>
-          <div className="flex w-full overflow-hidden h-2 mb-4 text-xs rounded">
-            <div
-              style={{ width: `${progress}%`, backgroundColor: typeBgColor }}
-              className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center"
-            ></div>
-          </div>
-          {showElapsedTime && (
-            <div className="flex items-center text-xs text-gray-500 mb-4 space-x-2">
-              <span
-                className={`bg-${cardViewBgColor} text-${cardViewTextColor} px-2 py-1 rounded-full`}
-                style={{ backgroundColor: typeBgColor, color: typeTextColor }}
-              >
-                Elapsed Time: {formatElapsedTime(elapsedTime)}
-              </span>
-            </div>
-          )}
-          <div className={`text-xs text-${cardViewTextColor} mb-6`}>{status}</div>
+    <div
+      className={`rounded-xl p-4 shadow-sm border ${
+        isDark
+          ? 'bg-gray-900 border-gray-800 text-white'
+          : 'bg-white border-gray-200 text-gray-900'
+      } ${className}`}
+      style={style}
+      {...props}
+    >
+      <div className="flex mb-2 items-center justify-between gap-2">
+        {title && (
+          <span
+            className="text-xs font-semibold inline-block py-1 px-2.5 rounded-full"
+            style={{ backgroundColor: typeBgColor, color: typeTextColor }}
+          >
+            {title}
+          </span>
+        )}
+        <span className="text-xs font-bold ml-auto">{clamped}%</span>
+      </div>
+
+      <div className="w-full bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-2">
+        <div
+          style={{ width: `${clamped}%`, backgroundColor: typeBgColor }}
+          className="h-full transition-all duration-300 rounded-full"
+        />
+      </div>
+
+      {showElapsedTime && (
+        <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          Elapsed Time: {formatElapsedTime(elapsedTime)}
         </div>
+      )}
+
+      {status && (
+        <div className="text-xs text-gray-600 dark:text-gray-300 mt-1">{status}</div>
       )}
     </div>
   );
 };
-module.exports=ProgressUI;
 
-export default ProgressUI;
+export const ProgressUI = Progress;
+export default Progress;
